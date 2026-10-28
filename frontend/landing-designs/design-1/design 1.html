@@ -1,0 +1,1241 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scale IT OS // SCALE X — Futuristic AI Command Center</title>
+    <meta name="description"
+        content="Scale IT OS connects your people, processes, projects and intelligence into one intelligent enterprise operating system built to help modern businesses scale.">
+
+    <!-- Google Fonts: Geist, Inter & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Material Symbols Outlined -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Geist', 'system-ui', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        command: {
+                            bg: '#040711',
+                            panel: 'rgba(8, 14, 28, 0.72)',
+                            surface: '#0b1329',
+                            card: 'rgba(13, 23, 44, 0.65)',
+                            border: 'rgba(56, 189, 248, 0.16)',
+                            borderHover: 'rgba(99, 102, 241, 0.45)',
+                            cyan: '#06b6d4',
+                            sky: '#38bdf8',
+                            indigo: '#6366f1',
+                            violet: '#8b5cf6',
+                            emerald: '#10b981',
+                            amber: '#f59e0b'
+                        }
+                    },
+                    boxShadow: {
+                        'command-glow': '0 0 50px -10px rgba(56, 189, 248, 0.25)',
+                        'indigo-glow': '0 0 45px -8px rgba(99, 102, 241, 0.3)',
+                        'hud-panel': 'inset 0 1px 0 0 rgba(255, 255, 255, 0.08), 0 20px 40px -15px rgba(0, 0, 0, 0.7)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        :root {
+            --bg-base: #040711;
+            --text-primary: #f8fafc;
+            --text-muted: #94a3b8;
+            --grid-line: rgba(56, 189, 248, 0.045);
+        }
+
+        body {
+            background-color: var(--bg-base);
+            color: var(--text-primary);
+            font-family: 'Geist', sans-serif;
+            overflow-x: hidden;
+            background-image:
+                radial-gradient(ellipse 90% 60% at 50% -10%, rgba(99, 102, 241, 0.18), transparent 70%),
+                radial-gradient(ellipse 60% 40% at 85% 25%, rgba(56, 189, 248, 0.12), transparent 60%),
+                radial-gradient(ellipse 70% 50% at 15% 75%, rgba(139, 92, 246, 0.1), transparent 70%);
+            background-attachment: fixed;
+        }
+
+        /* Technical Background Grid */
+        .tech-grid {
+            background-size: 40px 40px;
+            background-image:
+                linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+                linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+        }
+
+        /* Fine Technical Dots */
+        .tech-dots {
+            background-image: radial-gradient(rgba(56, 189, 248, 0.12) 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+
+        /* Glass HUD Panel */
+        .hud-glass {
+            background: rgba(8, 14, 28, 0.74);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(56, 189, 248, 0.14);
+            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.06), 0 20px 45px rgba(2, 6, 18, 0.65);
+        }
+
+        .hud-glass:hover {
+            border-color: rgba(99, 102, 241, 0.35);
+        }
+
+        /* Concentric Radar Ring Rotation */
+        @keyframes radar-spin-clockwise {
+            from {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+
+            to {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+
+        @keyframes radar-spin-counter {
+            from {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+
+            to {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+        }
+
+        .animate-radar-cw {
+            animation: radar-spin-clockwise 32s linear infinite;
+        }
+
+        .animate-radar-ccw {
+            animation: radar-spin-counter 45s linear infinite;
+        }
+
+        @keyframes scan-line {
+            0% {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: translateY(1000%);
+                opacity: 0;
+            }
+        }
+
+        .animate-scan {
+            animation: scan-line 8s ease-in-out infinite;
+        }
+
+        @keyframes pulse-subtle {
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.85;
+                transform: scale(0.995);
+            }
+        }
+
+        .animate-telemetry-pulse {
+            animation: pulse-subtle 4s ease-in-out infinite;
+        }
+
+        /* Smooth Reveal Animation */
+        .reveal-node {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal-node.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #040711;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #334155;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            ::before,
+            ::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+    </style>
+</head>
+
+<body class="selection:bg-cyan-500/30 selection:text-cyan-200">
+
+    <!-- TOP TELEMETRY PROTOCOL STRIP -->
+    <header
+        class="w-full border-b border-cyan-500/10 bg-[#03060f]/90 text-[11px] font-mono text-slate-400 py-1.5 px-4 md:px-8 flex justify-between items-center z-50 relative">
+        <div class="flex items-center gap-3">
+            <span class="inline-flex items-center gap-1.5 text-emerald-400 font-semibold tracking-wider">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                SYSTEM ACTIVE
+            </span>
+            <span class="hidden sm:inline text-slate-600">//</span>
+            <span class="hidden sm:inline text-slate-400">CORE NODE: <span
+                    class="text-cyan-300">SCALE-IT-OS-CORE-4</span></span>
+            <span class="hidden md:inline text-slate-600">//</span>
+            <span class="hidden md:inline text-slate-400">PROTOCOL: <span class="text-indigo-300">MULTI-TENANT RBAC
+                    2.4</span></span>
+        </div>
+        <div class="flex items-center gap-4 text-slate-400">
+            <span class="hidden lg:inline">SYNC LATENCY: <span class="text-emerald-400 font-mono">14ms</span></span>
+            <span class="text-slate-600 hidden lg:inline">//</span>
+            <a href="../../landing%20page.html"
+                class="text-sky-400 hover:text-sky-300 transition-colors flex items-center gap-1 font-mono text-[11px]">
+                <span class="material-symbols-outlined text-[13px]">swap_horiz</span>
+                Original Version
+            </a>
+        </div>
+    </header>
+
+    <!-- PRIMARY COMMAND NAVIGATION -->
+    <nav
+        class="sticky top-0 w-full z-40 bg-[#040711]/85 backdrop-blur-xl border-b border-white/[0.08] transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+
+            <!-- BRAND IDENTITY -->
+            <a href="#"
+                class="flex items-center gap-3 group focus:outline-none focus:ring-2 focus:ring-cyan-500/50 rounded-lg p-1">
+                <div
+                    class="w-10 h-10 rounded-lg bg-gradient-to-br from-cyan-500/20 via-indigo-500/30 to-purple-600/20 border border-cyan-400/30 flex items-center justify-center shadow-lg shadow-cyan-500/10 group-hover:border-cyan-400/60 transition-all duration-300">
+                    <span
+                        class="material-symbols-outlined text-cyan-400 text-2xl group-hover:scale-110 transition-transform">all_inclusive</span>
+                </div>
+                <div class="flex flex-col">
+                    <div class="flex items-center gap-2">
+                        <span
+                            class="font-bold text-lg tracking-tight text-white group-hover:text-cyan-300 transition-colors">SCALE
+                            IT OS</span>
+                        <span
+                            class="px-1.5 py-0.5 text-[9px] font-mono font-semibold rounded bg-cyan-500/10 border border-cyan-400/30 text-cyan-300 tracking-wider">SCALE
+                            X</span>
+                    </div>
+                    <span class="text-[10px] font-mono tracking-wider text-slate-400 uppercase">Intelligent Enterprise
+                        OS</span>
+                </div>
+            </a>
+
+            <!-- DESKTOP NAVIGATION -->
+            <div class="hidden md:flex items-center gap-1 lg:gap-2">
+                <a href="#solutions"
+                    class="px-3.5 py-2 text-sm font-medium text-slate-300 hover:text-white hover:bg-white/[0.04] rounded-lg transition-all">
+                    Solutions
+                </a>
+                <a href="#features"
+                    class="px-3.5 py-2 text-sm font-medium text-slate-300 hover:text-white hover:bg-white/[0.04] rounded-lg transition-all">
+                    The Ecosystem
+                </a>
+                <a href="#architecture"
+                    class="px-3.5 py-2 text-sm font-medium text-slate-300 hover:text-white hover:bg-white/[0.04] rounded-lg transition-all">
+                    Command Architecture
+                </a>
+                <a href="#about"
+                    class="px-3.5 py-2 text-sm font-medium text-slate-300 hover:text-white hover:bg-white/[0.04] rounded-lg transition-all">
+                    System Specs
+                </a>
+            </div>
+
+            <!-- ACTION CTA CLUSTER -->
+            <div class="hidden md:flex items-center gap-3">
+                <a href="../../get-started.html"
+                    class="relative group inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-gradient-to-r from-sky-600 via-indigo-600 to-purple-600 text-white text-xs font-mono font-semibold uppercase tracking-wider shadow-lg shadow-indigo-600/25 hover:shadow-cyan-500/30 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 border border-white/20">
+                    <span>Initialize System</span>
+                    <span
+                        class="material-symbols-outlined text-sm group-hover:translate-x-0.5 transition-transform">arrow_forward</span>
+                </a>
+            </div>
+
+            <!-- MOBILE MENU TRIGGER -->
+            <div class="flex md:hidden items-center">
+                <button id="mobile-toggle-btn"
+                    class="p-2 rounded-lg bg-white/[0.04] border border-white/10 text-slate-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                    aria-label="Toggle navigation menu">
+                    <span class="material-symbols-outlined text-2xl">menu</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- MOBILE EXPANDABLE DRAWER -->
+        <div id="mobile-menu-drawer"
+            class="hidden md:hidden border-b border-white/10 bg-[#070b18]/95 backdrop-blur-2xl px-5 pt-3 pb-6 space-y-3">
+            <div class="flex flex-col space-y-1">
+                <a href="#solutions"
+                    class="mobile-nav-link px-3 py-2.5 rounded-md text-sm font-medium text-slate-200 hover:bg-white/[0.06] hover:text-cyan-400">Solutions</a>
+                <a href="#features"
+                    class="mobile-nav-link px-3 py-2.5 rounded-md text-sm font-medium text-slate-200 hover:bg-white/[0.06] hover:text-cyan-400">The
+                    Ecosystem</a>
+                <a href="#architecture"
+                    class="mobile-nav-link px-3 py-2.5 rounded-md text-sm font-medium text-slate-200 hover:bg-white/[0.06] hover:text-cyan-400">Command
+                    Architecture</a>
+                <a href="#about"
+                    class="mobile-nav-link px-3 py-2.5 rounded-md text-sm font-medium text-slate-200 hover:bg-white/[0.06] hover:text-cyan-400">System
+                    Specs</a>
+            </div>
+            <div class="pt-3 border-t border-white/10 flex flex-col gap-2">
+                <a href="../../get-started.html"
+                    class="w-full py-3 text-center rounded-lg bg-gradient-to-r from-sky-600 to-indigo-600 text-white font-mono text-xs uppercase tracking-wider font-semibold shadow-md">
+                    Initialize System →
+                </a>
+                <a href="../../landing%20page.html"
+                    class="w-full py-2 text-center text-xs font-mono text-slate-400 hover:text-white">
+                    View Original Reference
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION: FUTURISTIC AI COMMAND CENTER -->
+    <section class="relative pt-12 pb-24 md:pt-20 md:pb-36 overflow-hidden tech-grid">
+
+        <!-- AMBIENT DEPTH LIGHTING -->
+        <div
+            class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-gradient-to-tr from-cyan-500/15 via-indigo-600/15 to-purple-600/10 rounded-full blur-[120px] pointer-events-none -z-10">
+        </div>
+        <div
+            class="absolute top-12 left-10 w-96 h-96 bg-sky-500/10 rounded-full blur-[100px] pointer-events-none -z-10">
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+
+            <!-- HERO HEADER BADGE -->
+            <div class="flex justify-center mb-6">
+                <div
+                    class="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full hud-glass border border-cyan-500/30 text-xs font-mono text-cyan-300 shadow-sm">
+                    <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+                    <span class="font-medium tracking-wide">SCALE X // ENTERPRISE AI CORE v4.8</span>
+                    <span class="text-slate-500">|</span>
+                    <span class="text-slate-400 hidden sm:inline">LIVE UNIFIED GOVERNANCE</span>
+                </div>
+            </div>
+
+            <!-- CINEMATIC HEADLINE -->
+            <div class="text-center max-w-4xl mx-auto mb-6">
+                <h1
+                    class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-white leading-[1.1] mb-6">
+                    Your Business. <br class="hidden sm:inline">
+                    <span
+                        class="bg-gradient-to-r from-sky-400 via-indigo-200 to-purple-300 bg-clip-text text-transparent">
+                        One Intelligent Operating System.
+                    </span>
+                </h1>
+
+                <p class="text-base sm:text-lg md:text-xl text-slate-300 max-w-2xl mx-auto font-normal leading-relaxed">
+                    Scale IT OS connects your <span class="text-white font-medium">people</span>, <span
+                        class="text-white font-medium">processes</span>, <span
+                        class="text-white font-medium">projects</span>, and <span
+                        class="text-white font-medium">intelligence</span> into one unified operating system built to
+                    help modern businesses scale with relentless velocity.
+                </p>
+            </div>
+
+            <!-- PRIMARY CTAs -->
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
+                <a href="../../get-started.html"
+                    class="w-full sm:w-auto px-8 py-4 rounded-xl bg-gradient-to-r from-sky-500 via-indigo-600 to-purple-600 text-white font-mono text-xs uppercase tracking-widest font-semibold flex items-center justify-center gap-3 shadow-xl shadow-indigo-600/30 hover:shadow-cyan-500/40 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 border border-white/25 group">
+                    <span>Get Started</span>
+                    <span
+                        class="material-symbols-outlined text-base group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                </a>
+
+                <a href="#features"
+                    class="w-full sm:w-auto px-7 py-4 rounded-xl hud-glass text-slate-200 hover:text-white font-mono text-xs uppercase tracking-wider font-medium flex items-center justify-center gap-2 hover:border-cyan-400/40 transition-all duration-300">
+                    <span class="material-symbols-outlined text-cyan-400 text-base">hub</span>
+                    <span>Explore Command Center</span>
+                </a>
+            </div>
+
+            <!-- ======================================================== -->
+            <!-- SOPHISTICATED COMMAND CENTER ECOSYSTEM VISUALIZATION     -->
+            <!-- ======================================================== -->
+            <div
+                class="relative w-full max-w-6xl mx-auto rounded-2xl hud-glass p-3 sm:p-6 lg:p-8 shadow-2xl border border-cyan-500/20">
+
+                <!-- TOP HUD COMMAND STRIP -->
+                <div
+                    class="flex flex-wrap items-center justify-between gap-3 pb-4 mb-6 border-b border-white/[0.08] text-xs font-mono">
+                    <div class="flex items-center gap-3">
+                        <div class="flex gap-1.5">
+                            <span class="w-2.5 h-2.5 rounded-full bg-red-500/80"></span>
+                            <span class="w-2.5 h-2.5 rounded-full bg-amber-500/80"></span>
+                            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500/80"></span>
+                        </div>
+                        <span class="text-slate-400 font-semibold tracking-wider flex items-center gap-2">
+                            <span class="material-symbols-outlined text-cyan-400 text-sm">terminal</span>
+                            SCALE-IT // LIVE RUNTIME TELEMETRY
+                        </span>
+                    </div>
+
+                    <!-- INTERACTIVE TELEMETRY TABS -->
+                    <div class="flex items-center gap-1 bg-[#050b1a] p-1 rounded-lg border border-white/[0.08]"
+                        id="telemetry-tabs">
+                        <button onclick="switchView('unified')" id="tab-unified"
+                            class="telemetry-tab active px-3 py-1.5 rounded text-[11px] font-mono text-white bg-indigo-600/50 border border-indigo-400/30 transition-all">
+                            01. Core Topology
+                        </button>
+                        <button onclick="switchView('people')" id="tab-people"
+                            class="telemetry-tab px-3 py-1.5 rounded text-[11px] font-mono text-slate-400 hover:text-white transition-all">
+                            02. People Ops
+                        </button>
+                        <button onclick="switchView('projects')" id="tab-projects"
+                            class="telemetry-tab px-3 py-1.5 rounded text-[11px] font-mono text-slate-400 hover:text-white transition-all">
+                            03. Projects
+                        </button>
+                        <button onclick="switchView('intelligence')" id="tab-intelligence"
+                            class="telemetry-tab px-3 py-1.5 rounded text-[11px] font-mono text-slate-400 hover:text-white transition-all">
+                            04. Intelligence
+                        </button>
+                    </div>
+                </div>
+
+                <!-- COMMAND CENTER CENTRAL STAGE -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+
+                    <!-- LEFT COLUMN: PEOPLE & PROJECT TELEMETRY PANELS -->
+                    <div class="lg:col-span-4 space-y-4">
+
+                        <!-- PANEL 1: PEOPLE MANAGEMENT -->
+                        <div
+                            class="hud-glass p-5 rounded-xl border border-white/10 hover:border-cyan-500/40 transition-all group">
+                            <div class="flex justify-between items-start mb-3">
+                                <div class="flex items-center gap-2.5">
+                                    <div
+                                        class="w-8 h-8 rounded-lg bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400">
+                                        <span class="material-symbols-outlined text-lg">groups</span>
+                                    </div>
+                                    <div>
+                                        <h4
+                                            class="text-sm font-semibold text-white group-hover:text-cyan-300 transition-colors">
+                                            People & Roles</h4>
+                                        <p class="text-[10px] font-mono text-slate-400">Active Tenant Access</p>
+                                    </div>
+                                </div>
+                                <span
+                                    class="px-2 py-0.5 rounded text-[9px] font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">LIVE
+                                    SYNC</span>
+                            </div>
+
+                            <div class="space-y-2 mt-4 text-xs font-mono">
+                                <div class="flex justify-between p-2 rounded bg-black/30 border border-white/5">
+                                    <span class="text-slate-400">Org Admins</span>
+                                    <span class="text-white font-semibold">4 Verified</span>
+                                </div>
+                                <div class="flex justify-between p-2 rounded bg-black/30 border border-white/5">
+                                    <span class="text-slate-400">Employees & Teams</span>
+                                    <span class="text-cyan-300 font-semibold">48 Active</span>
+                                </div>
+                                <div class="flex justify-between p-2 rounded bg-black/30 border border-white/5">
+                                    <span class="text-slate-400">Client Organizations</span>
+                                    <span class="text-indigo-300 font-semibold">16 Connected</span>
+                                </div>
+                            </div>
+                            <div
+                                class="mt-3 pt-3 border-t border-white/5 flex items-center justify-between text-[10px] font-mono text-slate-400">
+                                <span>ZERO-TRUST RBAC</span>
+                                <span class="text-emerald-400">100% Policy Match</span>
+                            </div>
+                        </div>
+
+                        <!-- PANEL 2: PROJECT COMMAND -->
+                        <div
+                            class="hud-glass p-5 rounded-xl border border-white/10 hover:border-indigo-500/40 transition-all group">
+                            <div class="flex justify-between items-start mb-3">
+                                <div class="flex items-center gap-2.5">
+                                    <div
+                                        class="w-8 h-8 rounded-lg bg-indigo-500/10 border border-indigo-500/30 flex items-center justify-center text-indigo-400">
+                                        <span class="material-symbols-outlined text-lg">account_tree</span>
+                                    </div>
+                                    <div>
+                                        <h4
+                                            class="text-sm font-semibold text-white group-hover:text-indigo-300 transition-colors">
+                                            Project Command</h4>
+                                        <p class="text-[10px] font-mono text-slate-400">Velocity & Deliverables</p>
+                                    </div>
+                                </div>
+                                <span class="text-indigo-400 font-mono text-xs font-semibold">94.8% SLA</span>
+                            </div>
+
+                            <div class="mt-3">
+                                <div class="flex justify-between text-[11px] font-mono text-slate-400 mb-1">
+                                    <span>Milestone Completion</span>
+                                    <span class="text-white">124 / 131</span>
+                                </div>
+                                <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                                    <div class="h-full bg-gradient-to-r from-sky-400 to-indigo-500 rounded-full"
+                                        style="width: 94.6%"></div>
+                                </div>
+                            </div>
+
+                            <div class="mt-3 grid grid-cols-2 gap-2 text-[10px] font-mono pt-3 border-t border-white/5">
+                                <div class="p-1.5 rounded bg-black/30 border border-white/5">
+                                    <div class="text-slate-400">Deliverables</div>
+                                    <div class="text-emerald-400 font-semibold text-xs mt-0.5">38 Cleared</div>
+                                </div>
+                                <div class="p-1.5 rounded bg-black/30 border border-white/5">
+                                    <div class="text-slate-400">Blockers</div>
+                                    <div class="text-amber-400 font-semibold text-xs mt-0.5">0 Critical</div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- CENTER COLUMN: RADAR HUD & CENTRAL UNIFIED ORCHESTRATOR -->
+                    <div class="lg:col-span-4 flex flex-col items-center justify-center relative min-h-[380px] p-4">
+
+                        <!-- Concentric Radar Rings -->
+                        <div
+                            class="absolute w-72 h-72 sm:w-80 sm:h-80 rounded-full border border-cyan-500/15 animate-radar-cw pointer-events-none">
+                            <div
+                                class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-cyan-400">
+                            </div>
+                            <div
+                                class="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 w-2 h-2 rounded-full bg-indigo-400">
+                            </div>
+                        </div>
+                        <div
+                            class="absolute w-56 h-56 rounded-full border border-dashed border-indigo-500/25 animate-radar-ccw pointer-events-none">
+                        </div>
+                        <div class="absolute w-40 h-40 rounded-full border border-cyan-400/20 pointer-events-none">
+                        </div>
+
+                        <!-- Central Core Hub Button/Status -->
+                        <div
+                            class="relative z-10 w-28 h-28 rounded-full bg-gradient-to-br from-[#0c1633] to-[#040817] border-2 border-cyan-400/50 shadow-[0_0_40px_rgba(56,189,248,0.35)] flex flex-col items-center justify-center text-center p-3 animate-telemetry-pulse">
+                            <span class="material-symbols-outlined text-cyan-300 text-3xl mb-0.5">hub</span>
+                            <span class="font-bold text-xs tracking-tight text-white">SCALE CORE</span>
+                            <span class="text-[9px] font-mono text-cyan-300 tracking-wider">v4.8 ACTIVE</span>
+                        </div>
+
+                        <!-- Central Orbiting Badges -->
+                        <div class="mt-8 text-center relative z-10">
+                            <div
+                                class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-black/60 border border-cyan-400/30 text-[11px] font-mono text-cyan-300">
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                                <span id="core-status-text">CROSS-DEPARTMENT RELAYS CONNECTED</span>
+                            </div>
+                            <p class="text-[11px] text-slate-400 font-mono mt-2">Zero Data Silos // Real-Time Event Bus
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- RIGHT COLUMN: REVENUE STREAM & INTELLIGENCE MONITOR -->
+                    <div class="lg:col-span-4 space-y-4">
+
+                        <!-- PANEL 3: OPERATIONS & REVENUE STREAM -->
+                        <div
+                            class="hud-glass p-5 rounded-xl border border-white/10 hover:border-purple-500/40 transition-all group">
+                            <div class="flex justify-between items-start mb-3">
+                                <div class="flex items-center gap-2.5">
+                                    <div
+                                        class="w-8 h-8 rounded-lg bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400">
+                                        <span class="material-symbols-outlined text-lg">monetization_on</span>
+                                    </div>
+                                    <div>
+                                        <h4
+                                            class="text-sm font-semibold text-white group-hover:text-purple-300 transition-colors">
+                                            Revenue & Deals</h4>
+                                        <p class="text-[10px] font-mono text-slate-400">Multi-Tenant Pipeline</p>
+                                    </div>
+                                </div>
+                                <span
+                                    class="px-2 py-0.5 rounded text-[9px] font-mono bg-purple-500/10 text-purple-300 border border-purple-500/20">+34%
+                                    MoM</span>
+                            </div>
+
+                            <div class="space-y-2 mt-3 text-xs font-mono">
+                                <div
+                                    class="p-2 rounded bg-black/30 border border-white/5 flex items-center justify-between">
+                                    <div>
+                                        <div class="text-white font-medium">Enterprise Expansion</div>
+                                        <div class="text-[10px] text-slate-400">Northwind Holdings</div>
+                                    </div>
+                                    <span class="text-emerald-400 font-semibold font-mono">$48,500</span>
+                                </div>
+                                <div
+                                    class="p-2 rounded bg-black/30 border border-white/5 flex items-center justify-between">
+                                    <div>
+                                        <div class="text-white font-medium">Cloud Infrastructure</div>
+                                        <div class="text-[10px] text-slate-400">Northstar Labs</div>
+                                    </div>
+                                    <span class="text-emerald-400 font-semibold font-mono">$12,400</span>
+                                </div>
+                            </div>
+
+                            <div
+                                class="mt-3 pt-3 border-t border-white/5 flex justify-between text-[10px] font-mono text-slate-400">
+                                <span>PIPELINE VELOCITY</span>
+                                <span class="text-cyan-300 font-semibold">14.2 Days Avg</span>
+                            </div>
+                        </div>
+
+                        <!-- PANEL 4: AUTONOMOUS AI INTELLIGENCE -->
+                        <div
+                            class="hud-glass p-5 rounded-xl border border-white/10 hover:border-cyan-500/40 transition-all group">
+                            <div class="flex justify-between items-start mb-3">
+                                <div class="flex items-center gap-2.5">
+                                    <div
+                                        class="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
+                                        <span class="material-symbols-outlined text-lg">smart_toy</span>
+                                    </div>
+                                    <div>
+                                        <h4
+                                            class="text-sm font-semibold text-white group-hover:text-emerald-300 transition-colors">
+                                            AI Intelligence</h4>
+                                        <p class="text-[10px] font-mono text-slate-400">Automated Triage Engine</p>
+                                    </div>
+                                </div>
+                                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                            </div>
+
+                            <div
+                                class="p-2.5 rounded bg-black/40 border border-white/5 text-[11px] font-mono space-y-1.5">
+                                <div class="text-cyan-300 flex items-center gap-1.5">
+                                    <span class="material-symbols-outlined text-xs">auto_awesome</span>
+                                    <span>Lead Auto-Routed to Sales</span>
+                                </div>
+                                <p class="text-[10px] text-slate-400">Score 94.2 • High intent enterprise matching ICP
+                                </p>
+                            </div>
+
+                            <div
+                                class="mt-3 pt-3 border-t border-white/5 flex justify-between items-center text-[10px] font-mono">
+                                <span class="text-slate-400">AUTOMATION RATE</span>
+                                <span class="text-emerald-400 font-semibold">89.4% Automated</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- BOTTOM HUD STATUS FOOTER -->
+                <div
+                    class="mt-6 pt-4 border-t border-white/[0.08] flex flex-wrap items-center justify-between text-[11px] font-mono text-slate-400 gap-3">
+                    <div class="flex items-center gap-4">
+                        <span>TENANTS: <strong class="text-white">ISOLATED</strong></span>
+                        <span class="text-slate-600">//</span>
+                        <span>SLA: <strong class="text-emerald-400">99.98%</strong></span>
+                        <span class="text-slate-600">//</span>
+                        <span>CONCURRENCY: <strong class="text-cyan-300">UNLIMITED</strong></span>
+                    </div>
+                    <div class="flex items-center gap-2 text-slate-500">
+                        <span>SCALE X ENTERPRISE SPECIFICATION</span>
+                        <span class="material-symbols-outlined text-xs text-cyan-400">verified</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SECTION 2: THE PROBLEM / SILO AUDIT (Elevating Existing Content) -->
+    <section id="solutions" class="py-24 md:py-32 relative border-t border-white/[0.08] bg-[#030611] tech-dots">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+            <!-- SECTION HEADER -->
+            <div class="text-center max-w-3xl mx-auto mb-16 reveal-node">
+                <div
+                    class="inline-flex items-center gap-2 px-3 py-1 rounded-full hud-glass border border-indigo-500/30 text-xs font-mono text-indigo-300 mb-4">
+                    <span class="material-symbols-outlined text-sm">problem</span>
+                    <span>THE OPERATIONAL FRICTION</span>
+                </div>
+                <!-- Reusing source of truth copy -->
+                <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white mb-4">
+                    Business shouldn't feel this complicated.
+                </h2>
+                <p class="text-base sm:text-lg text-slate-400 font-normal">
+                    Scattered tools, lost data, and fragmented communication slow down growth. Scale IT OS eliminates
+                    chaos by establishing a single command core.
+                </p>
+            </div>
+
+            <!-- TRANSFORMATION COMPARISON GRID -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch reveal-node">
+
+                <!-- THE OLD WAY: CHAOS & SILOS -->
+                <div
+                    class="p-8 rounded-2xl hud-glass border border-red-500/20 bg-gradient-to-b from-red-500/[0.03] to-transparent relative overflow-hidden group">
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="flex items-center gap-3">
+                            <div
+                                class="w-10 h-10 rounded-xl bg-red-500/10 border border-red-500/30 flex items-center justify-center text-red-400">
+                                <span class="material-symbols-outlined text-xl">error_outline</span>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-bold text-white">The Fragmented Tool Stack</h3>
+                                <p class="text-xs font-mono text-slate-400">Disconnected Silos & Manual Glue</p>
+                            </div>
+                        </div>
+                        <span
+                            class="px-2.5 py-1 rounded-md text-[10px] font-mono bg-red-500/10 border border-red-500/20 text-red-400 uppercase font-semibold">Fragile</span>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="p-4 rounded-xl bg-black/40 border border-white/5 flex items-start gap-3">
+                            <span class="material-symbols-outlined text-red-400 text-lg shrink-0 mt-0.5">close</span>
+                            <div>
+                                <h4 class="text-sm font-semibold text-slate-200">Scattered Databases & Spreadsheets</h4>
+                                <p class="text-xs text-slate-400 mt-1">Teams duplicate records across 6+ different
+                                    platforms with no single truth.</p>
+                            </div>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-black/40 border border-white/5 flex items-start gap-3">
+                            <span class="material-symbols-outlined text-red-400 text-lg shrink-0 mt-0.5">close</span>
+                            <div>
+                                <h4 class="text-sm font-semibold text-slate-200">Blind Spots in Project Execution</h4>
+                                <p class="text-xs text-slate-400 mt-1">Deliverables slip through cracks when task
+                                    tracking is detached from team roles.</p>
+                            </div>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-black/40 border border-white/5 flex items-start gap-3">
+                            <span class="material-symbols-outlined text-red-400 text-lg shrink-0 mt-0.5">close</span>
+                            <div>
+                                <h4 class="text-sm font-semibold text-slate-200">Disconnected Client Collaboration</h4>
+                                <p class="text-xs text-slate-400 mt-1">External customers have zero self-serve
+                                    visibility into project status.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div
+                        class="mt-6 pt-4 border-t border-white/5 text-[11px] font-mono text-red-400/80 flex items-center justify-between">
+                        <span>AVERAGE EFFICIENCY DRAIN</span>
+                        <span class="font-bold">-28 Hours / Team / Week</span>
+                    </div>
+                </div>
+
+                <!-- THE SCALE IT OS WAY: UNIFIED SYSTEM -->
+                <div
+                    class="p-8 rounded-2xl hud-glass border border-cyan-500/40 bg-gradient-to-b from-cyan-500/[0.06] to-transparent relative overflow-hidden group shadow-command-glow">
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="flex items-center gap-3">
+                            <div
+                                class="w-10 h-10 rounded-xl bg-cyan-500/20 border border-cyan-400/40 flex items-center justify-center text-cyan-300">
+                                <span class="material-symbols-outlined text-xl">all_inclusive</span>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-bold text-white">Scale IT OS Unified Architecture</h3>
+                                <p class="text-xs font-mono text-cyan-400">Single Intelligent Operating Hub</p>
+                            </div>
+                        </div>
+                        <span
+                            class="px-2.5 py-1 rounded-md text-[10px] font-mono bg-cyan-500/20 border border-cyan-400/40 text-cyan-300 uppercase font-semibold">Unified</span>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="p-4 rounded-xl bg-black/40 border border-cyan-500/20 flex items-start gap-3">
+                            <span
+                                class="material-symbols-outlined text-emerald-400 text-lg shrink-0 mt-0.5">check_circle</span>
+                            <div>
+                                <h4 class="text-sm font-semibold text-white">One Central Multi-Tenant Database</h4>
+                                <p class="text-xs text-slate-300 mt-1">Leads, companies, deals, team access, and
+                                    deliverables in one governed repository.</p>
+                            </div>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-black/40 border border-cyan-500/20 flex items-start gap-3">
+                            <span
+                                class="material-symbols-outlined text-emerald-400 text-lg shrink-0 mt-0.5">check_circle</span>
+                            <div>
+                                <h4 class="text-sm font-semibold text-white">Full-Spectrum Role Visibility</h4>
+                                <p class="text-xs text-slate-300 mt-1">Dedicated tailored dashboards for Org Admins,
+                                    Employees, and Client Companies.</p>
+                            </div>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-black/40 border border-cyan-500/20 flex items-start gap-3">
+                            <span
+                                class="material-symbols-outlined text-emerald-400 text-lg shrink-0 mt-0.5">check_circle</span>
+                            <div>
+                                <h4 class="text-sm font-semibold text-white">Continuous AI-Powered Workflow</h4>
+                                <p class="text-xs text-slate-300 mt-1">Autonomous prioritization, milestone alerting,
+                                    and CRM relationship scoring.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div
+                        class="mt-6 pt-4 border-t border-white/5 text-[11px] font-mono text-cyan-300 flex items-center justify-between">
+                        <span>OPERATIONAL VELOCITY GAIN</span>
+                        <span class="font-bold text-emerald-400">+340% Execution Speed</span>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SECTION 3: THE ECOSYSTEM — ONE BUSINESS. ONE SYSTEM. (Elevating Existing Features) -->
+    <section id="features" class="py-24 md:py-32 relative border-t border-white/[0.08] tech-grid">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+            <!-- SECTION HEADER -->
+            <div class="text-center max-w-3xl mx-auto mb-20 reveal-node">
+                <!-- Reusing source of truth category and title -->
+                <div
+                    class="inline-flex items-center gap-2 px-3 py-1 rounded-full hud-glass border border-cyan-500/30 text-xs font-mono text-cyan-300 mb-4">
+                    <span class="material-symbols-outlined text-sm">view_in_ar</span>
+                    <span>THE ECOSYSTEM</span>
+                </div>
+                <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white mb-4">
+                    One Business. One System.
+                </h2>
+                <p class="text-base sm:text-lg text-slate-400">
+                    Eliminate silos. Bring your people, projects, and customers into a single, cohesive environment
+                    designed for high-velocity teams.
+                </p>
+            </div>
+
+            <!-- CORE SYSTEM MODULES GRID -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 reveal-node">
+
+                <!-- MODULE 1: PEOPLE MANAGEMENT (from existing landing page) -->
+                <div
+                    class="hud-glass p-6 rounded-2xl border border-white/10 hover:border-cyan-400/50 transition-all duration-300 hover:-translate-y-1 group">
+                    <div
+                        class="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 mb-6 group-hover:scale-110 group-hover:bg-cyan-500/20 transition-all">
+                        <span class="material-symbols-outlined text-2xl">groups</span>
+                    </div>
+                    <div class="text-[10px] font-mono text-cyan-400 uppercase tracking-widest mb-1">MODULE 01</div>
+                    <h3 class="text-lg font-bold text-white mb-2 group-hover:text-cyan-300 transition-colors">People
+                        Management</h3>
+                    <p class="text-sm text-slate-400 leading-relaxed mb-6">
+                        Unify directories, roles, and access controls in one central hub. Ensure zero friction across
+                        all organization members.
+                    </p>
+                    <div class="space-y-1.5 text-xs font-mono text-slate-300 pt-4 border-t border-white/5">
+                        <div class="flex items-center gap-2">
+                            <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
+                            <span>Tenant Role Governance</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
+                            <span>Granular Permissions</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MODULE 2: PROJECT COMMAND (from existing landing page) -->
+                <div
+                    class="hud-glass p-6 rounded-2xl border border-white/10 hover:border-indigo-400/50 transition-all duration-300 hover:-translate-y-1 group">
+                    <div
+                        class="w-12 h-12 rounded-xl bg-indigo-500/10 border border-indigo-500/30 flex items-center justify-center text-indigo-400 mb-6 group-hover:scale-110 group-hover:bg-indigo-500/20 transition-all">
+                        <span class="material-symbols-outlined text-2xl">account_tree</span>
+                    </div>
+                    <div class="text-[10px] font-mono text-indigo-400 uppercase tracking-widest mb-1">MODULE 02</div>
+                    <h3 class="text-lg font-bold text-white mb-2 group-hover:text-indigo-300 transition-colors">Project
+                        Command</h3>
+                    <p class="text-sm text-slate-400 leading-relaxed mb-6">
+                        Track dependencies, resources, and timelines across the entire organization with deep milestone
+                        transparency.
+                    </p>
+                    <div class="space-y-1.5 text-xs font-mono text-slate-300 pt-4 border-t border-white/5">
+                        <div class="flex items-center gap-2">
+                            <span class="w-1.5 h-1.5 rounded-full bg-indigo-400"></span>
+                            <span>Live Deliverable Tracking</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="w-1.5 h-1.5 rounded-full bg-indigo-400"></span>
+                            <span>Dynamic Task Routing</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MODULE 3: CRM & PIPELINE ENGINE (backed by product codebase) -->
+                <div
+                    class="hud-glass p-6 rounded-2xl border border-white/10 hover:border-purple-400/50 transition-all duration-300 hover:-translate-y-1 group">
+                    <div
+                        class="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400 mb-6 group-hover:scale-110 group-hover:bg-purple-500/20 transition-all">
+                        <span class="material-symbols-outlined text-2xl">analytics</span>
+                    </div>
+                    <div class="text-[10px] font-mono text-purple-400 uppercase tracking-widest mb-1">MODULE 03</div>
+                    <h3 class="text-lg font-bold text-white mb-2 group-hover:text-purple-300 transition-colors">CRM &
+                        Revenue Pipeline</h3>
+                    <p class="text-sm text-slate-400 leading-relaxed mb-6">
+                        Full lead lifecycle tracking, contact relations, deal pipelines, and automated company
+                        interaction histories.
+                    </p>
+                    <div class="space-y-1.5 text-xs font-mono text-slate-300 pt-4 border-t border-white/5">
+                        <div class="flex items-center gap-2">
+                            <span class="w-1.5 h-1.5 rounded-full bg-purple-400"></span>
+                            <span>Multi-Stage Deals Pipeline</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="w-1.5 h-1.5 rounded-full bg-purple-400"></span>
+                            <span>Client Organization Portal</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MODULE 4: AUTONOMOUS AI & AUTOMATION (backed by codebase ai-service) -->
+                <div
+                    class="hud-glass p-6 rounded-2xl border border-white/10 hover:border-emerald-400/50 transition-all duration-300 hover:-translate-y-1 group">
+                    <div
+                        class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 mb-6 group-hover:scale-110 group-hover:bg-emerald-500/20 transition-all">
+                        <span class="material-symbols-outlined text-2xl">smart_toy</span>
+                    </div>
+                    <div class="text-[10px] font-mono text-emerald-400 uppercase tracking-widest mb-1">MODULE 04</div>
+                    <h3 class="text-lg font-bold text-white mb-2 group-hover:text-emerald-300 transition-colors">Unified
+                        AI Intelligence</h3>
+                    <p class="text-sm text-slate-400 leading-relaxed mb-6">
+                        Intelligent lead scoring, automated task generation, risk alerts, and natural language business
+                        insights.
+                    </p>
+                    <div class="space-y-1.5 text-xs font-mono text-slate-300 pt-4 border-t border-white/5">
+                        <div class="flex items-center gap-2">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                            <span>Predictive Pipeline Triage</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                            <span>Real-Time Context Synthesis</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SECTION 4: ENTERPRISE COMMAND ARCHITECTURE SPECS -->
+    <section id="architecture" class="py-24 md:py-32 relative border-t border-white/[0.08] bg-[#030610]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+
+                <div class="lg:col-span-5 space-y-6">
+                    <div
+                        class="inline-flex items-center gap-2 px-3 py-1 rounded-full hud-glass border border-cyan-500/30 text-xs font-mono text-cyan-300">
+                        <span class="material-symbols-outlined text-sm">security</span>
+                        <span>ARCHITECTURE SPECIFICATION</span>
+                    </div>
+
+                    <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-white leading-tight">
+                        Built from the ground up for mission-critical enterprise scaling.
+                    </h2>
+
+                    <p class="text-slate-400 text-base leading-relaxed">
+                        Scale IT OS is engineered to guarantee strict tenant isolation, sub-millisecond event
+                        propagation, and seamless multi-role delegation across every layer of your business.
+                    </p>
+
+                    <div class="space-y-3 pt-2 font-mono text-xs">
+                        <div class="p-3 rounded-lg bg-black/40 border border-white/5 flex items-center justify-between">
+                            <span class="text-slate-400">Tenant Isolation Policy</span>
+                            <span class="text-cyan-300 font-semibold">Strict Encrypted Namespacing</span>
+                        </div>
+                        <div class="p-3 rounded-lg bg-black/40 border border-white/5 flex items-center justify-between">
+                            <span class="text-slate-400">Role Hierarchies</span>
+                            <span class="text-indigo-300 font-semibold">Org Admin / Employee / Client</span>
+                        </div>
+                        <div class="p-3 rounded-lg bg-black/40 border border-white/5 flex items-center justify-between">
+                            <span class="text-slate-400">Audit Trail Logging</span>
+                            <span class="text-emerald-400 font-semibold">Immutable Event Streams</span>
+                        </div>
+                    </div>
+
+                    <div class="pt-4">
+                        <a href="../../get-started.html"
+                            class="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 border border-cyan-400/30 font-mono text-xs uppercase tracking-wider transition-all">
+                            <span>Deploy Scale IT OS</span>
+                            <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- TECHNICAL HUD BENCHMARKS -->
+                <div class="lg:col-span-7">
+                    <div
+                        class="p-6 sm:p-8 rounded-2xl hud-glass border border-cyan-500/20 shadow-2xl relative overflow-hidden">
+
+                        <div
+                            class="flex items-center justify-between pb-6 mb-6 border-b border-white/[0.08] text-xs font-mono">
+                            <span class="text-white font-semibold flex items-center gap-2">
+                                <span class="material-symbols-outlined text-cyan-400 text-sm">tune</span>
+                                LIVE ARCHITECTURAL METRICS
+                            </span>
+                            <span class="text-emerald-400 flex items-center gap-1.5">
+                                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                                CLUSTER ONLINE
+                            </span>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 font-mono">
+
+                            <div class="p-4 rounded-xl bg-black/50 border border-white/5">
+                                <div class="text-slate-400 text-[11px] mb-1">MULTI-TENANT ENGINES</div>
+                                <div class="text-2xl font-bold text-white mb-2">100% Isolated</div>
+                                <p class="text-[10px] text-slate-500">Every organization retains cryptographic data
+                                    separation.</p>
+                            </div>
+
+                            <div class="p-4 rounded-xl bg-black/50 border border-white/5">
+                                <div class="text-slate-400 text-[11px] mb-1">QUERY & EVENT LATENCY</div>
+                                <div class="text-2xl font-bold text-cyan-300 mb-2">&lt; 18ms</div>
+                                <p class="text-[10px] text-slate-500">Edge synchronization across global workspaces.</p>
+                            </div>
+
+                            <div class="p-4 rounded-xl bg-black/50 border border-white/5">
+                                <div class="text-slate-400 text-[11px] mb-1">ENTERPRISE AVAILABILITY</div>
+                                <div class="text-2xl font-bold text-emerald-400 mb-2">99.98%</div>
+                                <p class="text-[10px] text-slate-500">Zero unplanned downtime architectural standard.
+                                </p>
+                            </div>
+
+                            <div class="p-4 rounded-xl bg-black/50 border border-white/5">
+                                <div class="text-slate-400 text-[11px] mb-1">ROLE ACCESS AUDITING</div>
+                                <div class="text-2xl font-bold text-indigo-300 mb-2">Real-Time</div>
+                                <p class="text-[10px] text-slate-500">Continuous telemetry and action tracing.</p>
+                            </div>
+
+                        </div>
+
+                        <div
+                            class="mt-6 p-4 rounded-xl bg-gradient-to-r from-cyan-950/40 via-indigo-950/30 to-black border border-cyan-500/20 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs font-mono">
+                            <div class="flex items-center gap-2">
+                                <span class="material-symbols-outlined text-cyan-400">verified_user</span>
+                                <span class="text-slate-300">Ready for Enterprise Tier Production</span>
+                            </div>
+                            <span class="text-cyan-400 font-bold">PACKAGE COMPLIANT</span>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SECTION 5: FINAL SYSTEM INITIALIZATION CTA -->
+    <section class="py-24 md:py-32 relative border-t border-white/[0.08] tech-dots overflow-hidden">
+
+        <div
+            class="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-950/10 to-transparent pointer-events-none">
+        </div>
+        <div
+            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-indigo-600/15 rounded-full blur-[100px] pointer-events-none">
+        </div>
+
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+
+            <div class="p-8 sm:p-12 md:p-16 rounded-3xl hud-glass border border-cyan-400/30 shadow-2xl relative">
+
+                <div
+                    class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-400/30 text-xs font-mono text-cyan-300 mb-6">
+                    <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping"></span>
+                    <span>DEPLOYMENT READY // ZERO LATENCY</span>
+                </div>
+
+                <h2
+                    class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white mb-6 leading-tight">
+                    Command your entire business from one intelligent operating system.
+                </h2>
+
+                <p class="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto mb-10 leading-relaxed font-normal">
+                    Experience unified intelligence across people, projects, deals, and operations. Choose your role and
+                    initialize your workspace today.
+                </p>
+
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <a href="../../get-started.html"
+                        class="w-full sm:w-auto px-9 py-4 rounded-xl bg-gradient-to-r from-sky-500 via-indigo-600 to-purple-600 text-white font-mono text-xs uppercase tracking-widest font-semibold flex items-center justify-center gap-3 shadow-xl shadow-indigo-600/30 hover:shadow-cyan-500/40 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 border border-white/30 group">
+                        <span>Get Started Now</span>
+                        <span
+                            class="material-symbols-outlined text-base group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                    </a>
+
+                    <a href="../../landing%20page.html"
+                        class="w-full sm:w-auto px-8 py-4 rounded-xl hud-glass text-slate-300 hover:text-white font-mono text-xs uppercase tracking-wider font-medium flex items-center justify-center gap-2 hover:border-cyan-400/40 transition-all duration-300">
+                        <span class="material-symbols-outlined text-sm">history</span>
+                        <span>Original Reference</span>
+                    </a>
+                </div>
+
+                <div
+                    class="mt-10 pt-6 border-t border-white/[0.08] flex flex-wrap items-center justify-center gap-6 text-[11px] font-mono text-slate-400">
+                    <span class="flex items-center gap-1.5">
+                        <span class="material-symbols-outlined text-emerald-400 text-sm">check</span>
+                        Instant Tenant Provisioning
+                    </span>
+                    <span class="flex items-center gap-1.5">
+                        <span class="material-symbols-outlined text-emerald-400 text-sm">check</span>
+                        Enterprise Role-Based Access
+                    </span>
+                    <span class="flex items-center gap-1.5">
+                        <span class="material-symbols-outlined text-emerald-400 text-sm">check</span>
+                        Zero Setup Friction
+                    </span>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- FOOTER (Preserving & Elevating Existing Content) -->
+    <footer id="about" class="w-full border-t border-white/[0.08] bg-[#02050d] py-14 text-slate-400 text-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-8">
+
+                <!-- BRAND & STATUS -->
+                <div class="flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left">
+                    <div class="flex items-center gap-2">
+                        <div
+                            class="w-8 h-8 rounded-lg bg-cyan-500/10 border border-cyan-400/30 flex items-center justify-center text-cyan-400">
+                            <span class="material-symbols-outlined text-lg">all_inclusive</span>
+                        </div>
+                        <span class="font-bold text-white tracking-tight">Scale IT OS</span>
+                    </div>
+                    <span class="hidden sm:inline text-slate-700">|</span>
+                    <span class="text-xs font-mono text-slate-500">SCALE X PROTOCOL // ENTERPRISE EDITION</span>
+                </div>
+
+                <!-- POLICY LINKS (Preserving Existing Destinations) -->
+                <div class="flex flex-wrap items-center justify-center gap-6 font-mono text-xs">
+                    <a href="#" class="hover:text-cyan-300 transition-colors">Privacy</a>
+                    <a href="#" class="hover:text-cyan-300 transition-colors">Terms</a>
+                    <a href="#" class="hover:text-cyan-300 transition-colors">Security</a>
+                    <a href="../../get-started.html" class="text-sky-400 hover:text-sky-300 transition-colors">Access
+                        Portal</a>
+                </div>
+
+                <!-- COPYRIGHT (Preserving existing text) -->
+                <div class="text-xs font-mono text-slate-500">
+                    © 2026 Scale IT OS. All rights reserved.
+                </div>
+
+            </div>
+        </div>
+    </footer>
+
+    <!-- INTERACTIVE JAVASCRIPT CONTROLLERS -->
+    <script>
+        // 1. Mobile Menu Drawer Toggle
+        const mobileToggleBtn = document.getElementById('mobile-toggle-btn');
+        const mobileMenuDrawer = document.getElementById('mobile-menu-drawer');
+        const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+
+        if (mobileToggleBtn && mobileMenuDrawer) {
+            mobileToggleBtn.addEventListener('click', () => {
+                mobileMenuDrawer.classList.toggle('hidden');
+            });
+
+            mobileNavLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenuDrawer.classList.add('hidden');
+                });
+            });
+        }
+
+        // 2. Interactive Telemetry Tab Switcher
+        function switchView(mode) {
+            const tabs = document.querySelectorAll('.telemetry-tab');
+            tabs.forEach(t => {
+                t.classList.remove('active', 'text-white', 'bg-indigo-600/50', 'border-indigo-400/30');
+                t.classList.add('text-slate-400');
+            });
+
+            const activeBtn = document.getElementById('tab-' + mode);
+            if (activeBtn) {
+                activeBtn.classList.add('active', 'text-white', 'bg-indigo-600/50', 'border-indigo-400/30');
+                activeBtn.classList.remove('text-slate-400');
+            }
+
+            const coreStatus = document.getElementById('core-status-text');
+            if (coreStatus) {
+                if (mode === 'unified') {
+                    coreStatus.textContent = 'CROSS-DEPARTMENT RELAYS CONNECTED';
+                } else if (mode === 'people') {
+                    coreStatus.textContent = 'RBAC DIRECTORY & TEAM TELEMETRY ACTIVE';
+                } else if (mode === 'projects') {
+                    coreStatus.textContent = 'DELIVERABLE CRITICAL PATH IN SYNCHRONY';
+                } else if (mode === 'intelligence') {
+                    coreStatus.textContent = 'AI EVENT STREAM & RELATIONSHIP SCORING';
+                }
+            }
+        }
+
+        // 3. Scroll Reveal Observer for Subtle Section Animations
+        document.addEventListener('DOMContentLoaded', () => {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.12
+            };
+
+            const observer = new IntersectionObserver((entries, obs) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('revealed');
+                        obs.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.reveal-node').forEach(node => {
+                observer.observe(node);
+            });
+        });
+    </script>
+</body>
+
+</html>
